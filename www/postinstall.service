@@ -1,0 +1,17 @@
+# /etc/systemd/system/postinstall.service
+# cf. systemd-firstboot.service
+
+[Unit]
+Description=Postinstall
+After=network-online.target systemd-remount-fs.service
+# Bug - To switch firstboot on remove /etc/machine-id
+# ConditionFirstBoot=yes
+
+[Service]
+Type=oneshot
+# RemainAfterExit=yes
+ExecStart=/root/postinstall.sh
+ExecStartPost=/usr/sbin/reboot
+
+[Install]
+WantedBy=sysinit.target
